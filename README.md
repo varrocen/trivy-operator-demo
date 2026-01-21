@@ -24,8 +24,11 @@ Commands:
 docker pull python:3.4-alpine
 trivy image --download-db-only
 orb start k8s
+helm upgrade --install prom oci://ghcr.io/prometheus-community/charts/kube-prometheus-stack \
+  --namespace monitoring \
+  --create-namespace \
+  --values prometheus-values.yaml
 helm repo add aqua https://aquasecurity.github.io/helm-charts/
-helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
 helm repo update
 helm install trivy-operator aqua/trivy-operator \
   --namespace trivy-system \
@@ -76,11 +79,6 @@ watch kubectl tree deploy nginx
 Commands:
 
 ```
-helm upgrade --install prom prometheus-community/kube-prometheus-stack \
-  --namespace monitoring \
-  --create-namespace \
-  --values prometheus-values.yaml
-
 kubectl delete deployment nginx
 kubectl create deployment nginx --image nginx:1.16
 ```
@@ -96,9 +94,3 @@ Prom queries:
 * sum(trivy_image_vulnerabilities)
 * sum(trivy_resource_configaudits)
 * sum(trivy_image_exposedsecrets)
-
-Get trivy operator pod IP:
-
-```
-k -n trivy-system get pod -o wide
-```
