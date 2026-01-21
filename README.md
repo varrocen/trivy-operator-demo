@@ -1,5 +1,13 @@
 # trivy-operator-demo
 
+## Prerequites
+
+* [Docker](https://www.docker.com/)
+* [Helm](https://helm.sh/fr/)
+* [OrbStack](https://orbstack.dev/)
+* [Trivy](https://trivy.dev/)
+* [watch](https://gitlab.com/procps-ng/procps)
+
 ## Cleanup
 
 Commands:
@@ -22,7 +30,7 @@ helm repo update
 helm install trivy-operator aqua/trivy-operator \
   --namespace trivy-system \
   --create-namespace \
-  --version 0.20.0 \
+  --version 0.29.0 \
   --values trivy-values.yaml
 ```
 
@@ -46,9 +54,11 @@ kubectl create deployment nginx --image nginx:1.16
 Wait.
 
 ```
+watch kubectl tree deploy nginx
 kubectl get vulnerabilityreports -o wide
 kubectl get configauditreports -o wide
-kubectl tree deploy nginx
+kubectl get exposedsecretreports -o wide
+kubectl get sbomreports -o wide
 ```
 
 ```
@@ -58,7 +68,7 @@ kubectl set image deployment nginx nginx=nginx:1.17
 Wait.
 
 ```
-kubectl tree deploy nginx
+watch kubectl tree deploy nginx
 ```
 
 ## Demo 03
@@ -69,14 +79,9 @@ Commands:
 helm upgrade --install prom prometheus-community/kube-prometheus-stack \
   --namespace monitoring \
   --create-namespace \
-  --values prom-values.yaml
+  --values prometheus-values.yaml
 
-helm install trivy-operator aqua/trivy-operator \
-  --namespace trivy-system \
-  --create-namespace \
-  --version 0.20.0 \
-  --values trivy-values.yaml
-
+kubectl delete deployment nginx
 kubectl create deployment nginx --image nginx:1.16
 ```
 
