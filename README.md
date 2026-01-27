@@ -37,7 +37,7 @@ helm install trivy-operator aqua/trivy-operator \
   --values trivy-values.yaml
 ```
 
-## Demo 01
+## Demo 01 - Trivy
 
 Commands:
 
@@ -46,7 +46,7 @@ trivy image --scanners vuln,misconfig,secret,license python:3.4-alpine
 trivy k8s --report=summary cluster
 ```
 
-## Demo 02
+## Demo 02 - Trivy Operator
 
 Commands:
 
@@ -74,7 +74,7 @@ Wait.
 watch kubectl tree deploy nginx
 ```
 
-## Demo 03
+## Demo 03 - Grafana
 
 Commands:
 
