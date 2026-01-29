@@ -24,7 +24,7 @@ Commands:
 docker pull python:3.4-alpine
 trivy image --download-db-only
 orb start k8s
-helm upgrade --install prom oci://ghcr.io/prometheus-community/charts/kube-prometheus-stack \
+helm install prom oci://ghcr.io/prometheus-community/charts/kube-prometheus-stack \
   --namespace monitoring \
   --create-namespace \
   --values prometheus-values.yaml
